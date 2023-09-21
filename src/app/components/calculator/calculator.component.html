@@ -1,0 +1,119 @@
+<div
+  class="flex w-screen h-screen align-items-center justify-content-center p-5"
+>
+  <ng-container *ngIf="savingsCalculated">
+    <div
+      class="w-screen h-screen flex flex-column align-items-center justify-content-center p-6"
+    >
+      <div
+        class="flex flex-column justify-content-evenly align-items-center h-full"
+      >
+        <div class="text-center flex flex-column gap-2">
+          <div class="text-xl font-light">Best Vehicle to Use</div>
+          <div class="text-6xl font-bold">{{ bestVehicle }}</div>
+        </div>
+
+        <div class="text-center flex flex-column gap-2">
+          <div class="text-xl font-light">Carbon Credits</div>
+          <div class="text-6xl font-bold">
+            {{ carbonCredits | number : "1.4" }}
+          </div>
+        </div>
+
+        <div class="flex align-items-center justify-content-evenly">
+          <p-chart
+            type="bar"
+            [data]="emissionRateData"
+            [options]="chartOptions"
+            height="360"
+            width="480"
+          ></p-chart>
+          <p-chart
+            type="bar"
+            [data]="fuelRateData"
+            [options]="chartOptions"
+            height="360"
+            width="480"
+          ></p-chart>
+          <p-chart
+            type="bar"
+            [data]="fuelCostData"
+            [options]="chartOptions"
+            height="360"
+            width="480"
+          ></p-chart>
+        </div>
+
+        <p-button
+          label="Reset"
+          styleClass="p-button-danger "
+          (click)="reset()"
+        ></p-button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isLoading">
+    <div class="w-full h-full flex align-items-center justify-content-center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="acceptingInput">
+    <p-card
+      header="Calculate Fuel and Emissions"
+      subheader="Find out the savings offered by HUBL Non-Refrigerated Vehicle"
+      class="input-card"
+    >
+      <div class="w-full flex-column gap-2">
+        <div class="w-full m-2">
+          <small class="m-2 mx-4">Enter the payload percentage</small>
+          <p-inputNumber
+            [(ngModel)]="payloadPercentage"
+            [min]="0"
+            [max]="100"
+            suffix=" %"
+            class="w-full m-2"
+            styleClass="w-full m-2"
+          >
+          </p-inputNumber>
+        </div>
+
+        <div class="w-full">
+          <small class="m-2 mx-4">Enter the cost of fuel per liter</small>
+          <p-inputNumber
+            [(ngModel)]="fuelCostPerLiter"
+            [min]="0"
+            mode="currency"
+            class="w-full m-2"
+            styleClass="w-full m-2"
+            currency="GBP"
+            locale="en-UK"
+          >
+          </p-inputNumber>
+        </div>
+
+        <div class="w-full m-2">
+          <small class="m-2 mx-4">Enter the distance for the journey</small>
+          <p-inputNumber
+            [(ngModel)]="distanceMiles"
+            [min]="0"
+            [max]="100"
+            suffix=" mi"
+            class="w-full m-2"
+            styleClass="w-full m-2"
+          >
+          </p-inputNumber>
+        </div>
+      </div>
+
+      <ng-template pTemplate="footer"
+        ><p-button
+          label="Calculate"
+          styleClass="p-button m-3 w-full"
+          (click)="calculate()"
+        ></p-button>
+      </ng-template>
+    </p-card>
+  </ng-container>
+</div>

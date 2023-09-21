@@ -1,6 +1,7 @@
 {
   "name": "hubl-emissions-calculator",
   "version": "0.0.0",
+  "author": "AshwinSathian",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

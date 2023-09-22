@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { fadeInOut } from 'src/app/animations/fade-in-out.animation';
 import { EmissionsCalculatorService } from 'src/app/services/emissions-calculator.service';
 
 @Component({
@@ -6,6 +7,7 @@ import { EmissionsCalculatorService } from 'src/app/services/emissions-calculato
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.scss'],
   providers: [EmissionsCalculatorService],
+  animations: [fadeInOut],
 })
 export class CalculatorComponent implements OnInit {
   payloadPercentage = 0;

@@ -3,6 +3,7 @@
 >
   <ng-container *ngIf="savingsCalculated">
     <div
+      @fadeInOut
       class="w-screen h-screen flex flex-column align-items-center justify-content-center p-6"
     >
       <div
@@ -54,13 +55,17 @@
   </ng-container>
 
   <ng-container *ngIf="isLoading">
-    <div class="w-full h-full flex align-items-center justify-content-center">
+    <div
+      @fadeInOut
+      class="w-full h-full flex align-items-center justify-content-center"
+    >
       <p-progressSpinner></p-progressSpinner>
     </div>
   </ng-container>
 
   <ng-container *ngIf="acceptingInput">
     <p-card
+      @fadeInOut
       header="Calculate Fuel and Emissions"
       subheader="Find out the savings offered by HUBL Non-Refrigerated Vehicle"
       class="input-card"

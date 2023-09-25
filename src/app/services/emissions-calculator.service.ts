@@ -21,23 +21,23 @@ export class EmissionsCalculatorService {
       0.00016 + (0.15722 - 0.00016) * (payloadPercentage / 100);
 
     // The CoolRun Pod Data
-    const emissionRateTareHubl = 0.7663;
-    const emissionRatePayloadHubl =
+    const emissionRateTareCoolRun = 0.7663;
+    const emissionRatePayloadCoolRun =
       0.0003 + (0.3311 - 0.0003) * (payloadPercentage / 100);
-    const fuelRateTareHubl = 0.30501;
-    const fuelRatePayloadHubl =
+    const fuelRateTareCoolRun = 0.30501;
+    const fuelRatePayloadCoolRun =
       0.00013 + (0.13179 - 0.00013) * (payloadPercentage / 100);
 
     // Calculations
     const totalEmissionRateStd = emissionRateTareStd + emissionRatePayloadStd;
-    const totalEmissionRateHubl =
-      emissionRateTareHubl + emissionRatePayloadHubl;
+    const totalEmissionRateCoolRun =
+      emissionRateTareCoolRun + emissionRatePayloadCoolRun;
     const totalFuelRateStd = fuelRateTareStd + fuelRatePayloadStd;
-    const totalFuelRateHubl = fuelRateTareHubl + fuelRatePayloadHubl;
+    const totalFuelRateCoolRun = fuelRateTareCoolRun + fuelRatePayloadCoolRun;
     const totalFuelCostForJourneyStd =
       totalFuelRateStd * fuelCostPerLiter * distanceKm;
-    const totalFuelCostForJourneyHubl =
-      totalFuelRateHubl * fuelCostPerLiter * distanceKm;
+    const totalFuelCostForJourneyCoolRun =
+      totalFuelRateCoolRun * fuelCostPerLiter * distanceKm;
 
     const result = {
       chartData: [
@@ -48,7 +48,7 @@ export class EmissionsCalculatorService {
           borderWidth: 1,
           data: [
             totalEmissionRateStd.toFixed(4),
-            totalEmissionRateHubl.toFixed(4),
+            totalEmissionRateCoolRun.toFixed(4),
           ],
         },
         {
@@ -56,7 +56,7 @@ export class EmissionsCalculatorService {
           backgroundColor: ['rgba(17, 98, 144, 0.2)', 'rgba(63, 166, 72, 0.2)'],
           borderColor: ['rgb(17, 98, 144)', 'rgb(63, 166, 72)'],
           borderWidth: 1,
-          data: [totalFuelRateStd.toFixed(4), totalFuelRateHubl.toFixed(4)],
+          data: [totalFuelRateStd.toFixed(4), totalFuelRateCoolRun.toFixed(4)],
         },
         {
           label: 'Total Fuel Cost for Journey (£)',
@@ -65,17 +65,28 @@ export class EmissionsCalculatorService {
           borderWidth: 1,
           data: [
             totalFuelCostForJourneyStd.toFixed(4),
-            totalFuelCostForJourneyHubl.toFixed(4),
+            totalFuelCostForJourneyCoolRun.toFixed(4),
           ],
         },
       ],
       bestVehicle:
-        totalFuelCostForJourneyStd < totalFuelCostForJourneyHubl
+        totalFuelCostForJourneyStd < totalFuelCostForJourneyCoolRun
           ? 'Standard Refrigerated Vehicle'
           : 'The CoolRun Pod',
       carbonCredits: Math.abs(
-        totalFuelCostForJourneyStd - totalFuelCostForJourneyHubl
-      ).toFixed(4),
+        totalFuelCostForJourneyStd - totalFuelCostForJourneyCoolRun
+      ).toFixed(2),
+      standard: {
+        totalEmissionRateStd: totalEmissionRateStd.toFixed(2),
+        totalFuelRateStd: totalFuelRateStd.toFixed(2),
+        totalFuelCostForJourneyStd: totalFuelCostForJourneyStd.toFixed(2),
+      },
+      coolRun: {
+        totalEmissionRateCoolRun: totalEmissionRateCoolRun.toFixed(2),
+        totalFuelRateCoolRun: totalFuelRateCoolRun.toFixed(2),
+        totalFuelCostForJourneyCoolRun:
+          totalFuelCostForJourneyCoolRun.toFixed(2),
+      },
     };
 
     return result;

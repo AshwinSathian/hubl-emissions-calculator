@@ -10,12 +10,13 @@ import { EmissionsCalculatorService } from 'src/app/services/emissions-calculato
   animations: [fadeInOut],
 })
 export class CalculatorComponent implements OnInit {
-  payloadPercentage = 0;
+  payloadPercentage = 67;
   fuelCostPerLiter = 1.5;
-  distanceMiles = 0;
+  distanceMiles = 12112;
   acceptingInput = true;
   savingsCalculated = false;
   isLoading = false;
+  fullResult?: any;
   calculationResults: {
     label: string;
     backgroundColor: string;
@@ -88,6 +89,7 @@ export class CalculatorComponent implements OnInit {
       this.distanceMiles
     ) as any;
 
+    this.fullResult = result;
     this.calculationResults = result.chartData as any;
     this.emissionRateData = {
       labels: this.labels,

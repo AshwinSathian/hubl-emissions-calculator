@@ -32,6 +32,10 @@ export class CalculatorComponent implements OnInit {
   fuelCostData?: any;
   labels = ['Standard Refrigerated Vehicle', 'The CoolRun Pod'];
 
+  totalEmissionRateSavings = 0;
+  totalFuelRateSavings = 0;
+  totalFuelCostForJourneySavings = 0;
+
   constructor(private service: EmissionsCalculatorService) {}
 
   ngOnInit(): void {
@@ -79,7 +83,7 @@ export class CalculatorComponent implements OnInit {
     this.isLoading = true;
     setTimeout(() => {
       this._executeCalculation();
-    }, 2000);
+    }, 1000);
   }
 
   private _executeCalculation() {
@@ -107,6 +111,25 @@ export class CalculatorComponent implements OnInit {
     this.bestVehicle = result.bestVehicle;
     this.carbonCredits = result.carbonCredits;
 
+    this.totalEmissionRateSavings = Math.round(
+      ((this.fullResult?.standard?.totalEmissionRateStd -
+        this.fullResult?.coolRun?.totalEmissionRateCoolRun) *
+        100) /
+        this.fullResult?.standard?.totalEmissionRateStd
+    );
+    this.totalFuelRateSavings = Math.round(
+      ((this.fullResult?.standard?.totalFuelRateStd -
+        this.fullResult?.coolRun?.totalFuelRateCoolRun) *
+        100) /
+        this.fullResult?.standard?.totalFuelRateStd
+    );
+    this.totalFuelCostForJourneySavings = Math.round(
+      ((this.fullResult?.standard?.totalFuelCostForJourneyStd -
+        this.fullResult?.coolRun?.totalFuelCostForJourneyCoolRun) *
+        100) /
+        this.fullResult?.standard?.totalFuelCostForJourneyStd
+    );
+
     this.isLoading = false;
     this.savingsCalculated = true;
   }
@@ -120,6 +143,9 @@ export class CalculatorComponent implements OnInit {
       this.calculationResults = [];
       this.bestVehicle = '';
       this.carbonCredits = 0;
+      this.totalEmissionRateSavings = 0;
+      this.totalFuelRateSavings = 0;
+      this.totalFuelCostForJourneySavings = 0;
       this.chartData = null;
       this.emissionRateData = null;
       this.fuelRateData = null;

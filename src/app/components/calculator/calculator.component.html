@@ -18,9 +18,10 @@
             fullResult?.coolRun?.totalFuelCostForJourneyCoolRun
             | currency : "GBP"
         }}</span>
-        and earn
-        <span class="font-bold">{{ carbonCredits | number : "1.2" }}</span>
-        Carbon Credits
+        on this journey!
+        <!-- and earn
+        <span class="font-bold">{{ carbonCredits | number : "1.0" }}</span>
+        Carbon Credits -->
       </div>
 
       <div class="w-full grid p-3">
@@ -33,14 +34,8 @@
             class="w-full"
             styleClass="w-full"
           ></p-chart>
-          <div class="text-6xl coolrun-green m-4">
-            {{
-              ((fullResult?.standard?.totalEmissionRateStd -
-                fullResult?.coolRun?.totalEmissionRateCoolRun) *
-                100) /
-                fullResult?.standard?.totalEmissionRateStd | number : "1.2"
-            }}
-            %
+          <div class="text-6xl coolrun-green font-semibold m-4">
+            {{ totalEmissionRateSavings | number : "1.0" }}%
           </div>
         </div>
         <div class="col-4 flex flex-column align-items-center gap-2 p-3">
@@ -52,14 +47,8 @@
             class="w-full"
             styleClass="w-full"
           ></p-chart>
-          <div class="text-6xl coolrun-green m-4">
-            {{
-              ((fullResult?.standard?.totalFuelRateStd -
-                fullResult?.coolRun?.totalFuelRateCoolRun) *
-                100) /
-                fullResult?.standard?.totalFuelRateStd | number : "1.2"
-            }}
-            %
+          <div class="text-6xl coolrun-green font-semibold m-4">
+            {{ totalFuelRateSavings | number : "1.0" }}%
           </div>
         </div>
         <div class="col-4 flex flex-column align-items-center gap-2 p-3">
@@ -71,15 +60,8 @@
             class="w-full"
             styleClass="w-full"
           ></p-chart>
-          <div class="text-6xl coolrun-green m-4">
-            {{
-              ((fullResult?.standard?.totalFuelCostForJourneyStd -
-                fullResult?.coolRun?.totalFuelCostForJourneyCoolRun) *
-                100) /
-                fullResult?.standard?.totalFuelCostForJourneyStd
-                | number : "1.2"
-            }}
-            %
+          <div class="text-6xl coolrun-green font-semibold m-4">
+            {{ totalFuelCostForJourneySavings | number : "1.0" }}%
           </div>
         </div>
       </div>

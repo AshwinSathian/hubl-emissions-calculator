@@ -8,7 +8,7 @@ import {
 
 export const fadeInOut = trigger('fadeInOut', [
   state('void', style({ opacity: 0 })),
-  transition(':enter, :leave', [
+  transition(':enter', [
     animate('1000ms ease-in-out', style({ opacity: '*' })),
   ]),
 ]);

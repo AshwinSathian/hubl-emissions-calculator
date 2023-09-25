@@ -10,9 +10,9 @@ import { EmissionsCalculatorService } from 'src/app/services/emissions-calculato
   animations: [fadeInOut],
 })
 export class CalculatorComponent implements OnInit {
-  payloadPercentage = 0;
-  fuelCostPerLiter = 0;
-  distanceMiles = 0;
+  payloadPercentage = 87;
+  fuelCostPerLiter = 1.5;
+  distanceMiles = 1211;
   acceptingInput = true;
   savingsCalculated = false;
   isLoading = false;
@@ -29,7 +29,7 @@ export class CalculatorComponent implements OnInit {
   emissionRateData?: any;
   fuelRateData?: any;
   fuelCostData?: any;
-  labels = ['Standard Refrigerated Vehicle', 'HUBL Non-Refrigerated Vehicle'];
+  labels = ['Standard Refrigerated Vehicle', 'The CoolRun Pod'];
 
   constructor(private service: EmissionsCalculatorService) {}
 
@@ -110,18 +110,20 @@ export class CalculatorComponent implements OnInit {
   }
 
   reset() {
-    this.payloadPercentage = 0;
-    this.fuelCostPerLiter = 0;
-    this.distanceMiles = 0;
-    this.acceptingInput = true;
     this.savingsCalculated = false;
-    this.isLoading = false;
-    this.calculationResults = [];
-    this.bestVehicle = '';
-    this.carbonCredits = 0;
-    this.chartData = null;
-    this.emissionRateData = null;
-    this.fuelRateData = null;
-    this.fuelCostData = null;
+    this.isLoading = true;
+    setTimeout(() => {
+      this.payloadPercentage = 0;
+      this.distanceMiles = 0;
+      this.calculationResults = [];
+      this.bestVehicle = '';
+      this.carbonCredits = 0;
+      this.chartData = null;
+      this.emissionRateData = null;
+      this.fuelRateData = null;
+      this.fuelCostData = null;
+      this.isLoading = false;
+      this.acceptingInput = true;
+    }, 500);
   }
 }

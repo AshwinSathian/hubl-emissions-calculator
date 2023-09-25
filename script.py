@@ -19,7 +19,7 @@ def calculate_emission_fuel_and_cost():
    fuel_rate_tare_std = 0.36293
    fuel_rate_payload_std = 0.00016 + (0.15722 - 0.00016) * (payload_percentage / 100)
 
-   # HUBL Non-Refrigerated Vehicle Data
+   # The CoolRun Pod Data
    emission_rate_tare_hubl = 0.7663
    emission_rate_payload_hubl = 0.0003 + (0.3311 - 0.0003) * (payload_percentage / 100)
    fuel_rate_tare_hubl = 0.30501
@@ -39,13 +39,13 @@ def calculate_emission_fuel_and_cost():
    print(f"  - Total Emission Rate (kgCO2e/km): {round(total_emission_rate_std, 4)}")
    print(f"  - Total Fuel Rate (lit/km): {round(total_fuel_rate_std, 4)}")
    print(f"  - Total Fuel Cost for Journey (£): {round(total_fuel_cost_for_journey_std, 4)}")
-   print(f"\nHUBL Non-Refrigerated Vehicle (For {num_vehicles} vehicles):")
+   print(f"\nThe CoolRun Pod (For {num_vehicles} vehicles):")
    print(f"  - Total Emission Rate (kgCO2e/km): {round(total_emission_rate_hubl, 4)}")
    print(f"  - Total Fuel Rate (lit/km): {round(total_fuel_rate_hubl, 4)}")
    print(f"  - Total Fuel Cost for Journey (£): {round(total_fuel_cost_for_journey_hubl, 4)}")
 
    # Determine which vehicle is best to use
-   best_vehicle = 'Standard Refrigerated Vehicle' if total_fuel_cost_for_journey_std < total_fuel_cost_for_journey_hubl else 'HUBL Non-Refrigerated Vehicle'
+   best_vehicle = 'Standard Refrigerated Vehicle' if total_fuel_cost_for_journey_std < total_fuel_cost_for_journey_hubl else 'The CoolRun Pod'
 
    # Carbon credits calculation
    carbon_credits = abs(total_fuel_cost_for_journey_std - total_fuel_cost_for_journey_hubl)

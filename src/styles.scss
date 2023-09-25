@@ -1,9 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa&family=Roboto+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap");
 
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
 @import "primeflex/primeflex.scss";
 
 *:not(.pi) {
-  font-family: Comfortaa, sans-serif;
+  font-family: "Inter", sans-serif;
+}
+
+:root {
+  --coolrun-blue: rgb(17, 98, 144);
+  --coolrun-green: rgb(63, 166, 72);
+}
+
+.coolrun-blue {
+  color: var(--coolrun-blue);
+}
+
+.coolrun-green {
+  color: var(--coolrun-green);
 }

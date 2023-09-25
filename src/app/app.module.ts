@@ -8,6 +8,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { KnobModule } from 'primeng/knob';
 
 import { AppComponent } from './app.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
@@ -24,6 +25,7 @@ import { CalculatorComponent } from './components/calculator/calculator.componen
     ButtonModule,
     ChartModule,
     ProgressSpinnerModule,
+    KnobModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

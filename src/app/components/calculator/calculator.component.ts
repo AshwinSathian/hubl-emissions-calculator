@@ -10,8 +10,8 @@ import { EmissionsCalculatorService } from 'src/app/services/emissions-calculato
   animations: [fadeInOut],
 })
 export class CalculatorComponent implements OnInit {
-  payloadPercentage = 87;
-  distanceMilesPerDay = 1212;
+  payloadPercentage = 0;
+  distanceMilesPerDay = 0;
   acceptingInput = true;
   savingsCalculated = false;
   isLoading = false;

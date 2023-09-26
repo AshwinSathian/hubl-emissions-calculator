@@ -10,18 +10,29 @@
       class="w-full flex flex-column justify-content-evenly align-items-center h-full"
     >
       <div class="text-center text-6xl">
-        With the <span class="coolrun-blue font-bold">Cool</span
-        ><span class="coolrun-green font-bold">Run</span> Pods, you make savings
-        of
+        With the
+        <img
+          src="assets/CoolRun_logo.png"
+          class="max-w-15rem h-auto coolrun-logo"
+        />
+        pods, you make savings of
         <span class="font-bold">{{
           fullResult?.standard?.totalFuelCostForJourneyStd -
             fullResult?.coolRun?.totalFuelCostForJourneyCoolRun
             | currency : "GBP"
         }}</span>
-        on this journey!
-        <!-- and earn
-        <span class="font-bold">{{ carbonCredits | number : "1.0" }}</span>
-        Carbon Credits -->
+        on fuel and
+        <span class="font-bold">{{
+          truFuelSavingsPerDay | currency : "GBP"
+        }}</span>
+        on TRU per day, amounting to
+        <span class="font-bold">{{
+          (fullResult?.standard?.totalFuelCostForJourneyStd -
+            fullResult?.coolRun?.totalFuelCostForJourneyCoolRun) *
+            250 +
+            truFuelSavingsPerYear | currency : "GBP"
+        }}</span>
+        in savings annually!
       </div>
 
       <div class="w-full grid p-3">
@@ -29,7 +40,6 @@
           <p-chart
             type="bar"
             [data]="emissionRateData"
-            [options]="chartOptions"
             height="360"
             class="w-full"
             styleClass="w-full"
@@ -42,7 +52,6 @@
           <p-chart
             type="bar"
             [data]="fuelRateData"
-            [options]="chartOptions"
             height="360"
             class="w-full"
             styleClass="w-full"
@@ -55,7 +64,6 @@
           <p-chart
             type="bar"
             [data]="fuelCostData"
-            [options]="chartOptions"
             height="360"
             class="w-full"
             styleClass="w-full"
@@ -91,43 +99,50 @@
     class="w-screen h-screen flex flex-column align-items-center justify-content-center p-6"
   >
     <div class="w-full m-6 p-3 text-center">
-      <div class="text-6xl font-bold coolrun-blue">
-        What CoolRun can do to your fleet
+      <div class="text-6xl font-bold">
+        What can
+        <img
+          src="assets/CoolRun_logo.png"
+          class="max-w-15rem h-auto coolrun-logo"
+        />
+        do for your fleet?
       </div>
-      <div class="text-xl font-light coolrun-green">
-        Find out the savings offered by our CoolRun pods
-      </div>
+      <div class="text-xl font-light">Find out the savings our pods offer</div>
     </div>
 
     <div class="grid input-card m-0 p-0">
-      <div class="col flex align-items-center justify-content-center">
-        <p-knob
-          [(ngModel)]="payloadPercentage"
-          valueTemplate="{value}%"
-          [size]="200"
-        ></p-knob>
-      </div>
-      <div class="col flex align-items-center justify-content-center">
-        <p-inputNumber
-          [(ngModel)]="distanceMiles"
-          [showButtons]="true"
-          buttonLayout="vertical"
-          spinnerMode="vertical"
-          decrementButtonClass="p-button-secondary"
-          incrementButtonClass="p-button-secondary"
-          incrementButtonIcon="pi pi-plus"
-          decrementButtonIcon="pi pi-minus"
-          [min]="0"
-          suffix=" mi"
-        ></p-inputNumber>
-      </div>
-    </div>
-    <div class="grid input-card m-0 p-0">
-      <div class="col flex align-items-center justify-content-center">
+      <div class="col flex flex-column align-items-center gap-2">
+        <div
+          style="height: 225px"
+          class="flex align-items-center justify-content-center"
+        >
+          <p-knob
+            [(ngModel)]="payloadPercentage"
+            valueTemplate="{value}%"
+            [size]="200"
+          ></p-knob>
+        </div>
         <div class="text-xl font-light">Payload Percentage</div>
       </div>
-      <div class="col flex align-items-center justify-content-center">
-        <div class="text-xl font-light">Journey Distance</div>
+      <div class="col flex flex-column align-items-center gap-2">
+        <div
+          style="height: 225px"
+          class="flex align-items-center justify-content-center"
+        >
+          <p-inputNumber
+            [(ngModel)]="distanceMilesPerDay"
+            [showButtons]="true"
+            buttonLayout="vertical"
+            spinnerMode="vertical"
+            decrementButtonClass="p-button-secondary"
+            incrementButtonClass="p-button-secondary"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            [min]="0"
+            suffix=" mi"
+          ></p-inputNumber>
+        </div>
+        <div class="text-xl font-light">Journey Distance per Day</div>
       </div>
     </div>
 
@@ -135,7 +150,7 @@
       <p-button
         label="Calculate"
         styleClass="p-button m-3 w-full"
-        [disabled]="!payloadPercentage || !distanceMiles"
+        [disabled]="!payloadPercentage || !distanceMilesPerDay"
         (click)="calculate()"
       ></p-button>
     </div>

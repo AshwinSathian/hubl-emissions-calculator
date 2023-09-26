@@ -6,11 +6,14 @@ export class EmissionsCalculatorService {
 
   calculateEmissionFuelAndCost(
     payloadPercentage: number,
-    fuelCostPerLiter: number,
-    distanceMiles: number
+    distanceMilesPerDay: number
   ) {
+    const FUEL_COST_PER_LITER = 1.5;
+    const AVERAGE_SPEED = 25;
+    const AVERAGE_TRU_CONSUMPTION = 3;
+
     // Convert distance to kilometers
-    const distanceKm = distanceMiles * 1.60934;
+    const distanceKmPerDay = distanceMilesPerDay * 1.60934;
 
     // Standard Refrigerated Vehicle Data
     const emissionRateTareStd = 0.9118;
@@ -35,9 +38,21 @@ export class EmissionsCalculatorService {
     const totalFuelRateStd = fuelRateTareStd + fuelRatePayloadStd;
     const totalFuelRateCoolRun = fuelRateTareCoolRun + fuelRatePayloadCoolRun;
     const totalFuelCostForJourneyStd =
-      totalFuelRateStd * fuelCostPerLiter * distanceKm;
+      totalFuelRateStd * FUEL_COST_PER_LITER * distanceKmPerDay;
     const totalFuelCostForJourneyCoolRun =
-      totalFuelRateCoolRun * fuelCostPerLiter * distanceKm;
+      totalFuelRateCoolRun * FUEL_COST_PER_LITER * distanceKmPerDay;
+
+    const totalEmissionRateStdPerYear = totalEmissionRateStd * 250;
+    const totalEmissionRateCoolRunPerYear = totalEmissionRateCoolRun * 250;
+    const totalFuelRateStdPerYear = totalFuelRateStd * 250;
+    const totalFuelRateCoolRunPerYear = totalEmissionRateCoolRun * 250;
+    const totalFuelCostForJourneyStdPerYear = totalFuelCostForJourneyStd * 250;
+    const totalFuelCostForJourneyCoolRunPerYear =
+      totalFuelCostForJourneyCoolRun * 250;
+
+    const truFuelSavingsPerDay =
+      (distanceKmPerDay * AVERAGE_TRU_CONSUMPTION) / AVERAGE_SPEED;
+    const truFuelSavingsPerYear = truFuelSavingsPerDay * 250;
 
     const result = {
       chartData: [
@@ -87,6 +102,8 @@ export class EmissionsCalculatorService {
         totalFuelCostForJourneyCoolRun:
           totalFuelCostForJourneyCoolRun.toFixed(2),
       },
+      truFuelSavingsPerDay,
+      truFuelSavingsPerYear,
     };
 
     return result;

@@ -10,9 +10,8 @@ import { EmissionsCalculatorService } from 'src/app/services/emissions-calculato
   animations: [fadeInOut],
 })
 export class CalculatorComponent implements OnInit {
-  payloadPercentage = 0;
-  fuelCostPerLiter = 1.5;
-  distanceMiles = 0;
+  payloadPercentage = 87;
+  distanceMilesPerDay = 1212;
   acceptingInput = true;
   savingsCalculated = false;
   isLoading = false;
@@ -25,7 +24,6 @@ export class CalculatorComponent implements OnInit {
   }[] = [];
   bestVehicle = '';
   carbonCredits = 0;
-  chartOptions?: any;
   chartData?: any;
   emissionRateData?: any;
   fuelRateData?: any;
@@ -36,47 +34,12 @@ export class CalculatorComponent implements OnInit {
   totalFuelRateSavings = 0;
   totalFuelCostForJourneySavings = 0;
 
+  truFuelSavingsPerDay = 0;
+  truFuelSavingsPerYear = 0;
+
   constructor(private service: EmissionsCalculatorService) {}
 
-  ngOnInit(): void {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue(
-      '--text-color-secondary'
-    );
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-    this.chartOptions = {
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-        x: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-      },
-    };
-  }
+  ngOnInit(): void {}
 
   calculate() {
     this.acceptingInput = false;
@@ -89,8 +52,7 @@ export class CalculatorComponent implements OnInit {
   private _executeCalculation() {
     const result = this.service.calculateEmissionFuelAndCost(
       this.payloadPercentage,
-      this.fuelCostPerLiter,
-      this.distanceMiles
+      this.distanceMilesPerDay
     ) as any;
 
     this.fullResult = result;
@@ -130,6 +92,9 @@ export class CalculatorComponent implements OnInit {
         this.fullResult?.standard?.totalFuelCostForJourneyStd
     );
 
+    this.truFuelSavingsPerDay = this.fullResult?.truFuelSavingsPerDay;
+    this.truFuelSavingsPerYear = this.fullResult?.truFuelSavingsPerYear;
+
     this.isLoading = false;
     this.savingsCalculated = true;
   }
@@ -139,13 +104,15 @@ export class CalculatorComponent implements OnInit {
     this.isLoading = true;
     setTimeout(() => {
       this.payloadPercentage = 0;
-      this.distanceMiles = 0;
+      this.distanceMilesPerDay = 0;
       this.calculationResults = [];
       this.bestVehicle = '';
       this.carbonCredits = 0;
       this.totalEmissionRateSavings = 0;
       this.totalFuelRateSavings = 0;
       this.totalFuelCostForJourneySavings = 0;
+      this.truFuelSavingsPerDay = 0;
+      this.truFuelSavingsPerYear = 0;
       this.chartData = null;
       this.emissionRateData = null;
       this.fuelRateData = null;

@@ -43,7 +43,7 @@ export class EmissionsCalculatorService {
       chartData: [
         {
           label: 'Total Emission Rate (kgCO2e/km)',
-          backgroundColor: ['rgba(17, 98, 144, 0.2)', 'rgba(63, 166, 72, 0.2)'],
+          backgroundColor: ['rgba(17, 98, 144, 0.8)', 'rgba(63, 166, 72, 0.8)'],
           borderColor: ['rgb(17, 98, 144)', 'rgb(63, 166, 72)'],
           borderWidth: 1,
           data: [
@@ -53,14 +53,14 @@ export class EmissionsCalculatorService {
         },
         {
           label: 'Total Fuel Rate (lit/km)',
-          backgroundColor: ['rgba(17, 98, 144, 0.2)', 'rgba(63, 166, 72, 0.2)'],
+          backgroundColor: ['rgba(17, 98, 144, 0.8)', 'rgba(63, 166, 72, 0.8)'],
           borderColor: ['rgb(17, 98, 144)', 'rgb(63, 166, 72)'],
           borderWidth: 1,
           data: [totalFuelRateStd.toFixed(4), totalFuelRateCoolRun.toFixed(4)],
         },
         {
           label: 'Total Fuel Cost for Journey (£)',
-          backgroundColor: ['rgba(17, 98, 144, 0.2)', 'rgba(63, 166, 72, 0.2)'],
+          backgroundColor: ['rgba(17, 98, 144, 0.8)', 'rgba(63, 166, 72, 0.8)'],
           borderColor: ['rgb(17, 98, 144)', 'rgb(63, 166, 72)'],
           borderWidth: 1,
           data: [

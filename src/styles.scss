@@ -21,3 +21,25 @@
 .coolrun-green {
   color: var(--coolrun-green);
 }
+
+.desktop-view {
+  display: flex;
+}
+
+.mobile-view {
+  display: none;
+}
+
+.mobile-container {
+  min-height: calc(100vh - 5rem);
+}
+
+@media (max-width: 768px) {
+  .desktop-view {
+    display: none;
+  }
+
+  .mobile-view {
+    display: flex;
+  }
+}

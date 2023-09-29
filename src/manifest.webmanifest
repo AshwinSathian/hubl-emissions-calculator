@@ -1,8 +1,8 @@
 {
-  "name": "hubl-emissions-calculator",
-  "short_name": "hubl-emissions-calculator",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "CoolRun Emissions Calculator",
+  "short_name": "CoolRun",
+  "theme_color": "#3FA648",
+  "background_color": "#3FA648",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

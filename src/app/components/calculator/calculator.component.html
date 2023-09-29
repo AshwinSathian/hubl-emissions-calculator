@@ -111,39 +111,32 @@
 
     <div class="grid input-card m-0 p-0">
       <div class="col flex flex-column align-items-center gap-2">
-        <div
-          style="height: 225px"
-          class="flex align-items-center justify-content-center"
-        >
+        <div class="flex align-items-center justify-content-center">
           <p-knob
             [(ngModel)]="payloadPercentage"
             valueTemplate="{value}%"
-            [size]="200"
+            valueColor="var(--coolrun-blue)"
+            textColor="var(--coolrun-green)"
+            [size]="300"
           ></p-knob>
         </div>
-        <div class="text-xl font-light text-center">Payload Percentage</div>
+        <div class="text-xl font-light text-center coolrun-blue">
+          Payload Percentage
+        </div>
       </div>
       <div class="col flex flex-column align-items-center gap-2">
-        <div
-          style="height: 225px"
-          class="flex align-items-center justify-content-center py-5"
-        >
-          <p-inputNumber
+        <div class="flex align-items-center justify-content-center">
+          <p-knob
             [(ngModel)]="distanceMilesPerDay"
-            [showButtons]="true"
-            buttonLayout="vertical"
-            spinnerMode="vertical"
-            decrementButtonClass="p-button-secondary"
-            incrementButtonClass="p-button-secondary"
-            incrementButtonIcon="pi pi-plus"
-            decrementButtonIcon="pi pi-minus"
+            valueTemplate="{value} mi"
+            valueColor="var(--coolrun-blue)"
+            textColor="var(--coolrun-green)"
+            [size]="300"
             [min]="0"
-            suffix=" mi"
-            class="h-full"
-            styleClass="h-full"
-          ></p-inputNumber>
+            [max]="400"
+          ></p-knob>
         </div>
-        <div class="text-xl font-light text-center">
+        <div class="text-xl font-light text-center coolrun-blue">
           Journey Distance per Day
         </div>
       </div>
@@ -174,39 +167,32 @@
 
     <div class="grid input-card m-0 p-0">
       <div class="col flex flex-column align-items-center gap-1">
-        <div
-          style="height: 200px"
-          class="flex align-items-center justify-content-center"
-        >
+        <div class="flex align-items-center justify-content-center">
           <p-knob
             [(ngModel)]="payloadPercentage"
             valueTemplate="{value}%"
+            valueColor="var(--coolrun-blue)"
+            textColor="var(--coolrun-green)"
             [size]="175"
           ></p-knob>
         </div>
-        <div class="text-xl font-light text-center">Payload Percentage</div>
+        <div class="text-xl font-light text-center coolrun-blue">
+          Payload Percentage
+        </div>
       </div>
       <div class="col flex flex-column align-items-center gap-1">
-        <div
-          style="height: 175px"
-          class="flex align-items-center justify-content-center py-2"
-        >
-          <p-inputNumber
+        <div class="flex align-items-center justify-content-center">
+          <p-knob
             [(ngModel)]="distanceMilesPerDay"
-            [showButtons]="true"
-            buttonLayout="vertical"
-            spinnerMode="vertical"
-            decrementButtonClass="p-button-secondary"
-            incrementButtonClass="p-button-secondary"
-            incrementButtonIcon="pi pi-plus"
-            decrementButtonIcon="pi pi-minus"
+            valueTemplate="{value} mi"
+            valueColor="var(--coolrun-blue)"
+            textColor="var(--coolrun-green)"
+            [size]="175"
             [min]="0"
-            suffix=" mi"
-            class="h-full"
-            styleClass="h-full"
-          ></p-inputNumber>
+            [max]="400"
+          ></p-knob>
         </div>
-        <div class="text-xl font-light text-center">
+        <div class="text-xl font-light text-center coolrun-blue">
           Journey Distance per Day
         </div>
       </div>

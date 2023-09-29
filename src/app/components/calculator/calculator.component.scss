@@ -10,3 +10,10 @@
 .coolrun-logo {
   vertical-align: baseline;
 }
+
+:host ::ng-deep {
+  .p-knob-text,
+  .p-knob-value {
+    font-size: medium;
+  }
+}

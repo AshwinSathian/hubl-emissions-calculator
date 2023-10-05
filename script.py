@@ -37,11 +37,11 @@ def calculate_emission_fuel_and_cost():
    print("\nResults:")
    print(f"Standard Refrigerated Vehicle (For {num_vehicles} vehicles):")
    print(f"  - Total Emission Rate (kgCO2e/km): {round(total_emission_rate_std, 4)}")
-   print(f"  - Total Fuel Rate (lit/km): {round(total_fuel_rate_std, 4)}")
+   print(f"  - Total Fuel Rate (L/km): {round(total_fuel_rate_std, 4)}")
    print(f"  - Total Fuel Cost for Journey (£): {round(total_fuel_cost_for_journey_std, 4)}")
    print(f"\nThe CoolRun Pod (For {num_vehicles} vehicles):")
    print(f"  - Total Emission Rate (kgCO2e/km): {round(total_emission_rate_hubl, 4)}")
-   print(f"  - Total Fuel Rate (lit/km): {round(total_fuel_rate_hubl, 4)}")
+   print(f"  - Total Fuel Rate (L/km): {round(total_fuel_rate_hubl, 4)}")
    print(f"  - Total Fuel Cost for Journey (£): {round(total_fuel_cost_for_journey_hubl, 4)}")
 
    # Determine which vehicle is best to use

@@ -67,7 +67,7 @@ export class EmissionsCalculatorService {
           ],
         },
         {
-          label: 'Total Fuel Rate (lit/km)',
+          label: 'Total Fuel Rate (L/km)',
           backgroundColor: ['rgba(17, 98, 144, 0.8)', 'rgba(63, 166, 72, 0.8)'],
           borderColor: ['rgb(17, 98, 144)', 'rgb(63, 166, 72)'],
           borderWidth: 1,

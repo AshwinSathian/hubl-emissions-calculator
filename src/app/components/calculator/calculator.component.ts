@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { fadeInOut } from 'src/app/animations/fade-in-out.animation';
 import { EmissionsCalculatorService } from 'src/app/services/emissions-calculator.service';
+import { FormsModule } from '@angular/forms';
+import { KnobModule } from 'primeng/knob';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ButtonModule } from 'primeng/button';
+import { ChartModule } from 'primeng/chart';
+import { DecimalPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-calculator',
@@ -8,6 +14,16 @@ import { EmissionsCalculatorService } from 'src/app/services/emissions-calculato
   styleUrls: ['./calculator.component.scss'],
   providers: [EmissionsCalculatorService],
   animations: [fadeInOut],
+  standalone: true,
+  imports: [
+    ChartModule,
+    ButtonModule,
+    ProgressSpinnerModule,
+    KnobModule,
+    FormsModule,
+    DecimalPipe,
+    CurrencyPipe
+],
 })
 export class CalculatorComponent implements OnInit {
   payloadPercentage = 0;

@@ -1,10 +1,10 @@
 <div
-  class="desktop-view min-w-screen min-h-screen align-items-center justify-content-center p-5"
+  class="desktop-view w-screen h-screen align-items-center justify-content-center p-5"
 >
+  @if (savingsCalculated) {
   <div
-    *ngIf="savingsCalculated"
     @fadeInOut
-    class="min-w-screen min-h-screen flex flex-column align-items-center justify-content-center p-6"
+    class="w-screen h-screen flex flex-column align-items-center justify-content-center p-6"
   >
     <div
       class="w-full flex flex-column justify-content-evenly align-items-center h-full"
@@ -16,17 +16,17 @@
           class="max-w-15rem h-auto coolrun-logo"
         />
         pods, you make savings of
-        <span class="font-bold">{{
+        <span class="font-semibold">{{
           fullResult?.standard?.totalFuelCostForJourneyStd -
             fullResult?.coolRun?.totalFuelCostForJourneyCoolRun
             | currency : "GBP"
         }}</span>
         on fuel and
-        <span class="font-bold">{{
+        <span class="font-semibold">{{
           truFuelSavingsPerDay | currency : "GBP"
         }}</span>
         on TRU per day, amounting to
-        <span class="font-bold">{{
+        <span class="font-semibold">{{
           (fullResult?.standard?.totalFuelCostForJourneyStd -
             fullResult?.coolRun?.totalFuelCostForJourneyCoolRun) *
             250 +
@@ -34,46 +34,37 @@
         }}</span>
         in savings annually!
       </div>
-
       <div class="w-full grid p-3">
-        <div class="col-4 flex flex-column align-items-center gap-2 p-3">
-          <p-chart
-            type="bar"
-            [data]="emissionRateData"
-            height="360"
-            class="w-full"
-            styleClass="w-full"
-          ></p-chart>
-          <div class="text-6xl coolrun-green font-semibold m-4">
-            {{ totalEmissionRateSavings | number : "1.0" }}%
+        <div class="col flex align-items-center gap-2 p-3">
+          <img src="assets/co2.svg" class="h-5rem w-auto" />
+          <div class="w-full flex flex-column">
+            <div class="text-6xl font-semibold">
+              {{ totalEmissionRateSavings | number : "1.0" }}%
+            </div>
+            <div class="text-xl font-light">Reduction in Emission Rates</div>
           </div>
         </div>
-        <div class="col-4 flex flex-column align-items-center gap-2 p-3">
-          <p-chart
-            type="bar"
-            [data]="fuelRateData"
-            height="360"
-            class="w-full"
-            styleClass="w-full"
-          ></p-chart>
-          <div class="text-6xl coolrun-green font-semibold m-4">
-            {{ totalFuelRateSavings | number : "1.0" }}%
+        <div class="col flex align-items-center gap-2 p-3">
+          <img src="assets/fuel.svg" class="h-5rem w-auto" />
+          <div class="w-full flex flex-column">
+            <div class="text-6xl font-semibold">
+              {{ totalFuelRateSavings | number : "1.0" }}%
+            </div>
+            <div class="text-xl font-light">Reduction in Fuel Rates</div>
           </div>
         </div>
-        <div class="col-4 flex flex-column align-items-center gap-2 p-3">
-          <p-chart
-            type="bar"
-            [data]="fuelCostData"
-            height="360"
-            class="w-full"
-            styleClass="w-full"
-          ></p-chart>
-          <div class="text-6xl coolrun-green font-semibold m-4">
-            {{ totalFuelCostForJourneySavings | number : "1.0" }}%
+        <div class="col flex align-items-center gap-2 p-3">
+          <img src="assets/truck.svg" class="h-5rem w-auto" />
+          <div class="w-full flex flex-column">
+            <div class="text-6xl font-semibold">
+              {{ totalFuelCostForJourneySavings | number : "1.0" }}%
+            </div>
+            <div class="text-xl font-light">
+              Reduction in Fuel Cost for the Journey
+            </div>
           </div>
         </div>
       </div>
-
       <p-button
         label="Reset"
         styleClass="p-button-danger "
@@ -81,24 +72,20 @@
       ></p-button>
     </div>
   </div>
-
-  <div
-    *ngIf="isLoading"
-    class="min-w-screen h-scree flex align-items-center justify-content-center"
-  >
+  } @if (isLoading) {
+  <div class="w-screen h-scree flex align-items-center justify-content-center">
     <div class="flex flex-column gap-2">
       <p-progressSpinner class="mx-auto"></p-progressSpinner>
       <img src="assets/CoolRun_logo.png" class="w-15rem h-auto" />
     </div>
   </div>
-
+  } @if (acceptingInput) {
   <div
-    *ngIf="acceptingInput"
     @fadeInOut
-    class="w-full h-full flex flex-column align-items-center justify-content-center p-6"
+    class="w-full h-full flex flex-column align-items-center justify-content-evenly p-6"
   >
     <div class="w-full m-6 p-3 text-center flex flex-column gap-2">
-      <div class="text-6xl font-bold">
+      <div class="text-6xl font-semibold">
         What can
         <img
           src="assets/CoolRun_logo.png"
@@ -108,7 +95,6 @@
       </div>
       <div class="text-3xl font-light">Find out the savings our pods offer</div>
     </div>
-
     <div class="grid input-card m-0 p-0">
       <div class="col flex flex-column align-items-center gap-2">
         <div class="flex align-items-center justify-content-center">
@@ -141,30 +127,26 @@
         </div>
       </div>
     </div>
-
-    <div class="input-card m-3">
+    <div class="w-full flex align-items-center justify-content-center">
       <p-button
         label="Calculate"
-        styleClass="p-button m-3 w-full"
         [disabled]="!payloadPercentage || !distanceMilesPerDay"
         (click)="calculate()"
       ></p-button>
     </div>
   </div>
+  }
 </div>
-
-<div class="mobile-view flex-column w-screen min-h-screen">
+<div class="mobile-view flex-column w-screen h-screen">
+  @if (acceptingInput) {
   <div
-    *ngIf="acceptingInput"
     @fadeInOut
-    class="w-full min-h-screen flex flex-column align-items-center justify-content-between p-3"
+    class="w-full h-screen flex flex-column align-items-center justify-content-evenly p-3"
   >
     <img src="assets/CoolRun_logo.png" class="w-12rem h-auto mx-auto my-3" />
-
     <div class="text-3xl font-semibold text-center">
       What can we do for your fleet? Find out the savings our pods offer
     </div>
-
     <div class="grid input-card m-0 p-0">
       <div class="col flex flex-column align-items-center gap-1">
         <div class="flex align-items-center justify-content-center">
@@ -176,9 +158,7 @@
             [size]="175"
           ></p-knob>
         </div>
-        <div class="text-xl font-light text-center coolrun-blue">
-          Payload Percentage
-        </div>
+        <div class="text-xl font-light text-center">Payload Percentage</div>
       </div>
       <div class="col flex flex-column align-items-center gap-1">
         <div class="flex align-items-center justify-content-center">
@@ -192,49 +172,44 @@
             [max]="400"
           ></p-knob>
         </div>
-        <div class="text-xl font-light text-center coolrun-blue">
+        <div class="text-xl font-light text-center">
           Journey Distance per Day
         </div>
       </div>
     </div>
-
-    <p-button
-      label="Calculate"
-      styleClass="p-button m-1 w-full"
-      [disabled]="!payloadPercentage || !distanceMilesPerDay"
-      (click)="calculate()"
-    ></p-button>
+    <div class="w-full flex align-items-center justify-content-center">
+      <p-button
+        label="Calculate"
+        [disabled]="!payloadPercentage || !distanceMilesPerDay"
+        (click)="calculate()"
+      ></p-button>
+    </div>
   </div>
-
-  <div
-    *ngIf="isLoading"
-    class="w-full min-h-screen flex align-items-center justify-content-center"
-  >
+  } @if (isLoading) {
+  <div class="w-full h-screen flex align-items-center justify-content-center">
     <div class="flex flex-column gap-2">
       <p-progressSpinner class="mx-auto"></p-progressSpinner>
       <img src="assets/CoolRun_logo.png" class="w-15rem h-auto" />
     </div>
   </div>
-
+  } @if (savingsCalculated) {
   <div
-    *ngIf="savingsCalculated"
     @fadeInOut
-    class="w-full min-h-screen flex flex-column align-items-center justify-content-between p-3"
+    class="w-full h-screen flex flex-column align-items-center justify-content-between p-3"
   >
     <img src="assets/CoolRun_logo.png" class="w-12rem h-auto mx-auto my-3" />
-
-    <div class="text-3xl font-light text-center coolrun-blue">
+    <div class="text-2xl font-light text-center">
       With our pods, you make savings of
-      <span class="font-bold coolrun-green">{{
+      <span class="font-semibold">{{
         fullResult?.standard?.totalFuelCostForJourneyStd -
           fullResult?.coolRun?.totalFuelCostForJourneyCoolRun | currency : "GBP"
       }}</span>
       on fuel and
-      <span class="font-bold coolrun-green">{{
+      <span class="font-semibold">{{
         truFuelSavingsPerDay | currency : "GBP"
       }}</span>
       on TRU per day, amounting to
-      <span class="font-bold coolrun-green">{{
+      <span class="font-semibold">{{
         (fullResult?.standard?.totalFuelCostForJourneyStd -
           fullResult?.coolRun?.totalFuelCostForJourneyCoolRun) *
           250 +
@@ -242,44 +217,46 @@
       }}</span>
       in savings annually!
     </div>
-
     <div class="w-full grid p-3">
-      <div class="col flex flex-column align-items-center gap-2 p-3">
-        <div class="w-full text-center flex flex-column gap-2">
-          <div class="text-6xl font-bold coolrun-green">
+      <div class="col p-3 w-full flex flex-column">
+        <div class="flex align-items-center justify-content-center gap-2">
+          <img src="assets/co2.svg" class="w-5rem h-auto" />
+          <div class="text-6xl font-semibold">
             {{ totalEmissionRateSavings | number : "1.0" }}%
           </div>
-          <div class="text-xl font-light coolrun-blue">
-            Reduction in Emission Rates
-          </div>
+        </div>
+        <div class="text-xl font-light text-center">
+          Reduction in Emission Rates
         </div>
       </div>
-      <div class="col flex flex-column align-items-center gap-2 p-3">
-        <div class="w-full text-center flex flex-column gap-2">
-          <div class="text-6xl font-bold coolrun-green">
+      <div class="col p-3 w-full flex flex-column">
+        <div class="flex align-items-center justify-content-center gap-2">
+          <img src="assets/fuel.svg" class="w-5rem h-auto" />
+          <div class="text-6xl font-semibold">
             {{ totalFuelRateSavings | number : "1.0" }}%
           </div>
-          <div class="text-xl font-light coolrun-blue">
-            Reduction in Fuel Rates
-          </div>
+        </div>
+        <div class="text-xl font-light text-center">
+          Reduction in Fuel Rates
         </div>
       </div>
-      <div class="col flex flex-column align-items-center gap-2 p-3">
-        <div class="w-full text-center flex flex-column gap-2">
-          <div class="text-6xl font-bold coolrun-green">
+      <div class="col p-3 w-full flex flex-column">
+        <div class="flex align-items-center justify-content-center gap-2">
+          <img src="assets/truck.svg" class="w-5rem h-auto" />
+          <div class="text-6xl font-semibold">
             {{ totalFuelCostForJourneySavings | number : "1.0" }}%
           </div>
-          <div class="text-xl font-light coolrun-blue">
-            Reduction in Fuel Cost for the Journey
-          </div>
+        </div>
+        <div class="text-xl font-light text-center">
+          Reduction in Fuel Cost for the Journey
         </div>
       </div>
     </div>
-
     <p-button
       label="Reset"
       styleClass="p-button-danger "
       (click)="reset()"
     ></p-button>
   </div>
+  }
 </div>

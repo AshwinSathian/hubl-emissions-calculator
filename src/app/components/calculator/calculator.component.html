@@ -35,31 +35,33 @@
         in savings annually!
       </div>
       <div class="w-full grid p-3">
-        <div class="col flex align-items-center gap-2 p-3">
+        <div class="col flex align-items-center gap-4 p-5">
           <img src="assets/co2.svg" class="h-5rem w-auto" />
           <div class="w-full flex flex-column">
             <div class="text-6xl font-semibold">
               {{ totalEmissionRateSavings | number : "1.0" }}%
             </div>
-            <div class="text-xl font-light">Reduction in Emission Rates</div>
+            <div class="text-2xl font-semibold">
+              Reduction in Emission Rates
+            </div>
           </div>
         </div>
-        <div class="col flex align-items-center gap-2 p-3">
+        <div class="col flex align-items-center gap-4 p-5">
           <img src="assets/fuel.svg" class="h-5rem w-auto" />
           <div class="w-full flex flex-column">
             <div class="text-6xl font-semibold">
               {{ totalFuelRateSavings | number : "1.0" }}%
             </div>
-            <div class="text-xl font-light">Reduction in Fuel Rates</div>
+            <div class="text-2xl font-semibold">Reduction in Fuel Rates</div>
           </div>
         </div>
-        <div class="col flex align-items-center gap-2 p-3">
+        <div class="col flex align-items-center gap-4 p-5">
           <img src="assets/truck.svg" class="h-5rem w-auto" />
           <div class="w-full flex flex-column">
             <div class="text-6xl font-semibold">
               {{ totalFuelCostForJourneySavings | number : "1.0" }}%
             </div>
-            <div class="text-xl font-light">
+            <div class="text-2xl font-semibold">
               Reduction in Fuel Cost for the Journey
             </div>
           </div>
@@ -106,9 +108,7 @@
             [size]="300"
           ></p-knob>
         </div>
-        <div class="text-xl font-light text-center coolrun-blue">
-          Payload Percentage
-        </div>
+        <div class="text-xl font-normal text-center">Payload Percentage</div>
       </div>
       <div class="col flex flex-column align-items-center gap-2">
         <div class="flex align-items-center justify-content-center">
@@ -122,7 +122,7 @@
             [max]="400"
           ></p-knob>
         </div>
-        <div class="text-xl font-light text-center coolrun-blue">
+        <div class="text-xl font-normal text-center">
           Journey Distance per Day
         </div>
       </div>

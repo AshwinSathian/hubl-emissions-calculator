@@ -1,19 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { fadeInOut } from 'src/app/animations/fade-in-out.animation';
 import { EmissionsCalculatorService } from 'src/app/services/emissions-calculator.service';
+import { FormsModule } from '@angular/forms';
+import { KnobModule } from 'primeng/knob';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ButtonModule } from 'primeng/button';
+import { ChartModule } from 'primeng/chart';
+import { DecimalPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-calculator',
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.scss'],
   providers: [EmissionsCalculatorService],
+  animations: [fadeInOut],
+  standalone: true,
+  imports: [
+    ChartModule,
+    ButtonModule,
+    ProgressSpinnerModule,
+    KnobModule,
+    FormsModule,
+    DecimalPipe,
+    CurrencyPipe
+],
 })
 export class CalculatorComponent implements OnInit {
   payloadPercentage = 0;
-  fuelCostPerLiter = 0;
-  distanceMiles = 0;
+  distanceMilesPerDay = 0;
   acceptingInput = true;
   savingsCalculated = false;
   isLoading = false;
+  fullResult?: any;
   calculationResults: {
     label: string;
     backgroundColor: string;
@@ -22,70 +40,38 @@ export class CalculatorComponent implements OnInit {
   }[] = [];
   bestVehicle = '';
   carbonCredits = 0;
-  chartOptions?: any;
   chartData?: any;
   emissionRateData?: any;
   fuelRateData?: any;
   fuelCostData?: any;
-  labels = ['Standard Refrigerated Vehicle', 'HUBL Non-Refrigerated Vehicle'];
+  labels = ['Standard Refrigerated Vehicle', 'The CoolRun Pod'];
+
+  totalEmissionRateSavings = 0;
+  totalFuelRateSavings = 0;
+  totalFuelCostForJourneySavings = 0;
+
+  truFuelSavingsPerDay = 0;
+  truFuelSavingsPerYear = 0;
 
   constructor(private service: EmissionsCalculatorService) {}
 
-  ngOnInit(): void {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue(
-      '--text-color-secondary'
-    );
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-    this.chartOptions = {
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-        x: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-      },
-    };
-  }
+  ngOnInit(): void {}
 
   calculate() {
     this.acceptingInput = false;
     this.isLoading = true;
     setTimeout(() => {
       this._executeCalculation();
-    }, 2000);
+    }, 1000);
   }
 
   private _executeCalculation() {
     const result = this.service.calculateEmissionFuelAndCost(
       this.payloadPercentage,
-      this.fuelCostPerLiter,
-      this.distanceMiles
+      this.distanceMilesPerDay
     ) as any;
 
+    this.fullResult = result;
     this.calculationResults = result.chartData as any;
     this.emissionRateData = {
       labels: this.labels,
@@ -103,23 +89,52 @@ export class CalculatorComponent implements OnInit {
     this.bestVehicle = result.bestVehicle;
     this.carbonCredits = result.carbonCredits;
 
+    this.totalEmissionRateSavings = Math.round(
+      ((this.fullResult?.standard?.totalEmissionRateStd -
+        this.fullResult?.coolRun?.totalEmissionRateCoolRun) *
+        100) /
+        this.fullResult?.standard?.totalEmissionRateStd
+    );
+    this.totalFuelRateSavings = Math.round(
+      ((this.fullResult?.standard?.totalFuelRateStd -
+        this.fullResult?.coolRun?.totalFuelRateCoolRun) *
+        100) /
+        this.fullResult?.standard?.totalFuelRateStd
+    );
+    this.totalFuelCostForJourneySavings = Math.round(
+      ((this.fullResult?.standard?.totalFuelCostForJourneyStd -
+        this.fullResult?.coolRun?.totalFuelCostForJourneyCoolRun) *
+        100) /
+        this.fullResult?.standard?.totalFuelCostForJourneyStd
+    );
+
+    this.truFuelSavingsPerDay = this.fullResult?.truFuelSavingsPerDay;
+    this.truFuelSavingsPerYear = this.fullResult?.truFuelSavingsPerYear;
+
     this.isLoading = false;
     this.savingsCalculated = true;
   }
 
   reset() {
-    this.payloadPercentage = 0;
-    this.fuelCostPerLiter = 0;
-    this.distanceMiles = 0;
-    this.acceptingInput = true;
     this.savingsCalculated = false;
-    this.isLoading = false;
-    this.calculationResults = [];
-    this.bestVehicle = '';
-    this.carbonCredits = 0;
-    this.chartData = null;
-    this.emissionRateData = null;
-    this.fuelRateData = null;
-    this.fuelCostData = null;
+    this.isLoading = true;
+    setTimeout(() => {
+      this.payloadPercentage = 0;
+      this.distanceMilesPerDay = 0;
+      this.calculationResults = [];
+      this.bestVehicle = '';
+      this.carbonCredits = 0;
+      this.totalEmissionRateSavings = 0;
+      this.totalFuelRateSavings = 0;
+      this.totalFuelCostForJourneySavings = 0;
+      this.truFuelSavingsPerDay = 0;
+      this.truFuelSavingsPerYear = 0;
+      this.chartData = null;
+      this.emissionRateData = null;
+      this.fuelRateData = null;
+      this.fuelCostData = null;
+      this.isLoading = false;
+      this.acceptingInput = true;
+    }, 500);
   }
 }

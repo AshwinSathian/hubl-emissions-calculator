@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "hubl-emissions-calculator": {
+    "coolrun-emissions-calculator": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,20 +17,27 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/hubl-emissions-calculator",
+            "outputPath": "dist/coolrun-emissions-calculator",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/Logo.png",
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
             "styles": [
               "src/styles.scss",
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/themes/arya-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeflex/primeflex.css"
             ],
-            "scripts": ["node_modules/chart.js/dist/chart.js"]
+            "scripts": ["node_modules/chart.js/dist/chart.js"],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -63,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "hubl-emissions-calculator:build:production"
+              "buildTarget": "coolrun-emissions-calculator:build:production"
             },
             "development": {
-              "browserTarget": "hubl-emissions-calculator:build:development"
+              "buildTarget": "coolrun-emissions-calculator:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hubl-emissions-calculator:build"
+            "buildTarget": "coolrun-emissions-calculator:build"
           }
         },
         "test": {
@@ -83,10 +90,15 @@
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/Logo.png",
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
             "styles": [
               "src/styles.scss",
-              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/themes/arya-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeflex/primeflex.css"
             ],

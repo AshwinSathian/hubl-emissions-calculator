@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/hubl-emissions-calculator",
+    "public": "dist/coolrun-emissions-calculator",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {

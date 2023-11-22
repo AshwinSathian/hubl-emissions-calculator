@@ -1,9 +1,14 @@
 .input-card {
-  width: 50%;
-  height: 50%;
+  width: 75%;
 }
 
-.results-card {
-  width: 75%;
-  height: 75%;
+.coolrun-logo {
+  vertical-align: baseline;
+}
+
+:host ::ng-deep {
+  .p-knob-text,
+  .p-knob-value {
+    font-size: medium;
+  }
 }

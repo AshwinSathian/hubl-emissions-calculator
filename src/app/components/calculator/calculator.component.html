@@ -1,119 +1,262 @@
 <div
-  class="flex w-screen h-screen align-items-center justify-content-center p-5"
+  class="desktop-view w-screen h-screen align-items-center justify-content-center p-5"
 >
-  <ng-container *ngIf="savingsCalculated">
+  @if (savingsCalculated) {
+  <div
+    @fadeInOut
+    class="w-screen h-screen flex flex-column align-items-center justify-content-center p-6"
+  >
     <div
-      class="w-screen h-screen flex flex-column align-items-center justify-content-center p-6"
+      class="w-full flex flex-column justify-content-evenly align-items-center h-full"
     >
-      <div
-        class="flex flex-column justify-content-evenly align-items-center h-full"
-      >
-        <div class="text-center flex flex-column gap-2">
-          <div class="text-xl font-light">Best Vehicle to Use</div>
-          <div class="text-6xl font-bold">{{ bestVehicle }}</div>
-        </div>
-
-        <div class="text-center flex flex-column gap-2">
-          <div class="text-xl font-light">Carbon Credits</div>
-          <div class="text-6xl font-bold">
-            {{ carbonCredits | number : "1.4" }}
+      <div class="text-center text-6xl">
+        With the
+        <img
+          src="assets/CoolRun_logo.png"
+          class="max-w-15rem h-auto coolrun-logo"
+        />
+        pods, you make savings of
+        <span class="font-semibold">{{
+          fullResult?.standard?.totalFuelCostForJourneyStd -
+            fullResult?.coolRun?.totalFuelCostForJourneyCoolRun
+            | currency : "GBP"
+        }}</span>
+        on fuel and
+        <span class="font-semibold">{{
+          truFuelSavingsPerDay | currency : "GBP"
+        }}</span>
+        on TRU per day, amounting to
+        <span class="font-semibold">{{
+          (fullResult?.standard?.totalFuelCostForJourneyStd -
+            fullResult?.coolRun?.totalFuelCostForJourneyCoolRun) *
+            250 +
+            truFuelSavingsPerYear | currency : "GBP"
+        }}</span>
+        in savings annually!
+      </div>
+      <div class="w-full grid p-3">
+        <div class="col flex align-items-center gap-4 p-5">
+          <img src="assets/co2.svg" class="h-5rem w-auto" />
+          <div class="w-full flex flex-column">
+            <div class="text-6xl font-semibold">
+              {{ totalEmissionRateSavings | number : "1.0" }}%
+            </div>
+            <div class="text-2xl font-semibold">
+              Reduction in Emission Rates
+            </div>
           </div>
         </div>
-
-        <div class="flex align-items-center justify-content-evenly">
-          <p-chart
-            type="bar"
-            [data]="emissionRateData"
-            [options]="chartOptions"
-            height="360"
-            width="480"
-          ></p-chart>
-          <p-chart
-            type="bar"
-            [data]="fuelRateData"
-            [options]="chartOptions"
-            height="360"
-            width="480"
-          ></p-chart>
-          <p-chart
-            type="bar"
-            [data]="fuelCostData"
-            [options]="chartOptions"
-            height="360"
-            width="480"
-          ></p-chart>
+        <div class="col flex align-items-center gap-4 p-5">
+          <img src="assets/fuel.svg" class="h-5rem w-auto" />
+          <div class="w-full flex flex-column">
+            <div class="text-6xl font-semibold">
+              {{ totalFuelRateSavings | number : "1.0" }}%
+            </div>
+            <div class="text-2xl font-semibold">Reduction in Fuel Rates</div>
+          </div>
         </div>
-
-        <p-button
-          label="Reset"
-          styleClass="p-button-danger "
-          (click)="reset()"
-        ></p-button>
+        <div class="col flex align-items-center gap-4 p-5">
+          <img src="assets/truck.svg" class="h-5rem w-auto" />
+          <div class="w-full flex flex-column">
+            <div class="text-6xl font-semibold">
+              {{ totalFuelCostForJourneySavings | number : "1.0" }}%
+            </div>
+            <div class="text-2xl font-semibold">
+              Reduction in Fuel Cost for the Journey
+            </div>
+          </div>
+        </div>
       </div>
+      <p-button
+        label="Reset"
+        styleClass="p-button-danger "
+        (click)="reset()"
+      ></p-button>
     </div>
-  </ng-container>
-
-  <ng-container *ngIf="isLoading">
-    <div class="w-full h-full flex align-items-center justify-content-center">
-      <p-progressSpinner></p-progressSpinner>
+  </div>
+  } @if (isLoading) {
+  <div class="w-screen h-scree flex align-items-center justify-content-center">
+    <div class="flex flex-column gap-2">
+      <p-progressSpinner class="mx-auto"></p-progressSpinner>
+      <img src="assets/CoolRun_logo.png" class="w-15rem h-auto" />
     </div>
-  </ng-container>
-
-  <ng-container *ngIf="acceptingInput">
-    <p-card
-      header="Calculate Fuel and Emissions"
-      subheader="Find out the savings offered by HUBL Non-Refrigerated Vehicle"
-      class="input-card"
-    >
-      <div class="w-full flex-column gap-2">
-        <div class="w-full m-2">
-          <small class="m-2 mx-4">Enter the payload percentage</small>
-          <p-inputNumber
+  </div>
+  } @if (acceptingInput) {
+  <div
+    @fadeInOut
+    class="w-full h-full flex flex-column align-items-center justify-content-evenly p-6"
+  >
+    <div class="w-full m-6 p-3 text-center flex flex-column gap-2">
+      <div class="text-6xl font-semibold">
+        What can
+        <img
+          src="assets/CoolRun_logo.png"
+          class="max-w-15rem h-auto coolrun-logo"
+        />
+        do for your fleet?
+      </div>
+      <div class="text-3xl font-light">Find out the savings our pods offer</div>
+    </div>
+    <div class="grid input-card m-0 p-0">
+      <div class="col flex flex-column align-items-center gap-2">
+        <div class="flex align-items-center justify-content-center">
+          <p-knob
             [(ngModel)]="payloadPercentage"
-            [min]="0"
-            [max]="100"
-            suffix=" %"
-            class="w-full m-2"
-            styleClass="w-full m-2"
-          >
-          </p-inputNumber>
+            valueTemplate="{value}%"
+            valueColor="var(--coolrun-blue)"
+            textColor="var(--coolrun-green)"
+            [size]="300"
+          ></p-knob>
         </div>
-
-        <div class="w-full">
-          <small class="m-2 mx-4">Enter the cost of fuel per liter</small>
-          <p-inputNumber
-            [(ngModel)]="fuelCostPerLiter"
+        <div class="text-xl font-normal text-center">Payload Percentage</div>
+      </div>
+      <div class="col flex flex-column align-items-center gap-2">
+        <div class="flex align-items-center justify-content-center">
+          <p-knob
+            [(ngModel)]="distanceMilesPerDay"
+            valueTemplate="{value} mi"
+            valueColor="var(--coolrun-blue)"
+            textColor="var(--coolrun-green)"
+            [size]="300"
             [min]="0"
-            mode="currency"
-            class="w-full m-2"
-            styleClass="w-full m-2"
-            currency="GBP"
-            locale="en-UK"
-          >
-          </p-inputNumber>
+            [max]="400"
+          ></p-knob>
         </div>
-
-        <div class="w-full m-2">
-          <small class="m-2 mx-4">Enter the distance for the journey</small>
-          <p-inputNumber
-            [(ngModel)]="distanceMiles"
-            [min]="0"
-            [max]="100"
-            suffix=" mi"
-            class="w-full m-2"
-            styleClass="w-full m-2"
-          >
-          </p-inputNumber>
+        <div class="text-xl font-normal text-center">
+          Journey Distance per Day
         </div>
       </div>
-
-      <ng-template pTemplate="footer"
-        ><p-button
-          label="Calculate"
-          styleClass="p-button m-3 w-full"
-          (click)="calculate()"
-        ></p-button>
-      </ng-template>
-    </p-card>
-  </ng-container>
+    </div>
+    <div class="w-full flex align-items-center justify-content-center">
+      <p-button
+        label="Calculate"
+        [disabled]="!payloadPercentage || !distanceMilesPerDay"
+        (click)="calculate()"
+      ></p-button>
+    </div>
+  </div>
+  }
+</div>
+<div class="mobile-view flex-column w-screen h-screen">
+  @if (acceptingInput) {
+  <div
+    @fadeInOut
+    class="w-full h-screen flex flex-column align-items-center justify-content-evenly p-3"
+  >
+    <img src="assets/CoolRun_logo.png" class="w-12rem h-auto mx-auto my-3" />
+    <div class="text-3xl font-semibold text-center">
+      What can we do for your fleet? Find out the savings our pods offer
+    </div>
+    <div class="grid input-card m-0 p-0">
+      <div class="col flex flex-column align-items-center gap-1">
+        <div class="flex align-items-center justify-content-center">
+          <p-knob
+            [(ngModel)]="payloadPercentage"
+            valueTemplate="{value}%"
+            valueColor="var(--coolrun-blue)"
+            textColor="var(--coolrun-green)"
+            [size]="175"
+          ></p-knob>
+        </div>
+        <div class="text-xl font-light text-center">Payload Percentage</div>
+      </div>
+      <div class="col flex flex-column align-items-center gap-1">
+        <div class="flex align-items-center justify-content-center">
+          <p-knob
+            [(ngModel)]="distanceMilesPerDay"
+            valueTemplate="{value} mi"
+            valueColor="var(--coolrun-blue)"
+            textColor="var(--coolrun-green)"
+            [size]="175"
+            [min]="0"
+            [max]="400"
+          ></p-knob>
+        </div>
+        <div class="text-xl font-light text-center">
+          Journey Distance per Day
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex align-items-center justify-content-center">
+      <p-button
+        label="Calculate"
+        [disabled]="!payloadPercentage || !distanceMilesPerDay"
+        (click)="calculate()"
+      ></p-button>
+    </div>
+  </div>
+  } @if (isLoading) {
+  <div class="w-full h-screen flex align-items-center justify-content-center">
+    <div class="flex flex-column gap-2">
+      <p-progressSpinner class="mx-auto"></p-progressSpinner>
+      <img src="assets/CoolRun_logo.png" class="w-15rem h-auto" />
+    </div>
+  </div>
+  } @if (savingsCalculated) {
+  <div
+    @fadeInOut
+    class="w-full h-screen flex flex-column align-items-center justify-content-between p-3"
+  >
+    <img src="assets/CoolRun_logo.png" class="w-12rem h-auto mx-auto my-3" />
+    <div class="text-2xl font-light text-center">
+      With our pods, you make savings of
+      <span class="font-semibold">{{
+        fullResult?.standard?.totalFuelCostForJourneyStd -
+          fullResult?.coolRun?.totalFuelCostForJourneyCoolRun | currency : "GBP"
+      }}</span>
+      on fuel and
+      <span class="font-semibold">{{
+        truFuelSavingsPerDay | currency : "GBP"
+      }}</span>
+      on TRU per day, amounting to
+      <span class="font-semibold">{{
+        (fullResult?.standard?.totalFuelCostForJourneyStd -
+          fullResult?.coolRun?.totalFuelCostForJourneyCoolRun) *
+          250 +
+          truFuelSavingsPerYear | currency : "GBP"
+      }}</span>
+      in savings annually!
+    </div>
+    <div class="w-full grid p-3">
+      <div class="col p-3 w-full flex flex-column">
+        <div class="flex align-items-center justify-content-center gap-2">
+          <img src="assets/co2.svg" class="w-5rem h-auto" />
+          <div class="text-6xl font-semibold">
+            {{ totalEmissionRateSavings | number : "1.0" }}%
+          </div>
+        </div>
+        <div class="text-xl font-light text-center">
+          Reduction in Emission Rates
+        </div>
+      </div>
+      <div class="col p-3 w-full flex flex-column">
+        <div class="flex align-items-center justify-content-center gap-2">
+          <img src="assets/fuel.svg" class="w-5rem h-auto" />
+          <div class="text-6xl font-semibold">
+            {{ totalFuelRateSavings | number : "1.0" }}%
+          </div>
+        </div>
+        <div class="text-xl font-light text-center">
+          Reduction in Fuel Rates
+        </div>
+      </div>
+      <div class="col p-3 w-full flex flex-column">
+        <div class="flex align-items-center justify-content-center gap-2">
+          <img src="assets/truck.svg" class="w-5rem h-auto" />
+          <div class="text-6xl font-semibold">
+            {{ totalFuelCostForJourneySavings | number : "1.0" }}%
+          </div>
+        </div>
+        <div class="text-xl font-light text-center">
+          Reduction in Fuel Cost for the Journey
+        </div>
+      </div>
+    </div>
+    <p-button
+      label="Reset"
+      styleClass="p-button-danger "
+      (click)="reset()"
+    ></p-button>
+  </div>
+  }
 </div>
